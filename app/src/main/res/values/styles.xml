@@ -1,0 +1,32 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="BaseTheme" parent="android:Theme.Holo.Light">
+
+    </style>
+
+    <!-- Application theme. -->
+    <style name="AppTheme" parent="BaseTheme">
+        <item name="android:textViewStyle">@style/TextViewStyle</item>
+        <item name="android:buttonStyle">@style/ButtonStyle</item>
+        <item name="android:editTextStyle">@style/EditTextStyle</item>
+        <item name="android:windowBackground">@color/application_background</item>
+    </style>
+
+    <!-- TextView Style -->
+    <style name="TextViewStyle" parent="android:Widget.TextView">
+        <item name="android:fontFamily">@string/application_font</item>
+    </style>
+
+    <!-- TextView Style -->
+    <style name="ButtonStyle" parent="android:Widget.Holo.Button">
+        <item name="android:fontFamily">@string/application_font</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <!-- TextView Style -->
+    <style name="EditTextStyle" parent="android:Widget.EditText">
+        <item name="android:fontFamily">@string/application_font</item>
+    </style>
+
+</resources>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- App Background color -->
+    <color name="application_background">#FFFFFF</color>
+    <color name="application_background_gray">#DDD</color>
+
+    <!-- Action bar color -->
+    <color name="actionbar_background">#FF3AA5DC</color>
+    <color name="actionbar_text">#FFFFFF</color>
+
+    <!-- view pager color -->
+    <color name="viewpager_background">#FF3AA5DC</color>
+    <color name="viewpager_text">#FFFFFF</color>
+
+    <!-- panel color -->
+    <color name="panel_background">#FFFFFF</color>
+
+    <!-- text color -->
+    <color name="dark_gray">#AAA</color>
+    <color name="light_gray">#DDD</color>
+    <color name="blue">#33b5e5</color>
+    <color name="black">#000000</color>
+
+</resources>
