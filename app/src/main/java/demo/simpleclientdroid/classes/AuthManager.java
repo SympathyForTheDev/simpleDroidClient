@@ -1,18 +1,5 @@
 package demo.simpleclientdroid.classes;
 
-import android.content.Context;
-import android.preference.PreferenceManager;
-import android.content.SharedPreferences;
-import android.widget.ArrayAdapter;
-
-import org.apache.http.client.methods.HttpUriRequest;
-import org.json.JSONArray;
-import org.json.JSONObject;
-
-import java.util.ArrayList;
-
-import demo.simpleclientdroid.data.User;
-
 /**
  * Created by damien.bouclier on 02/09/2014.
  */

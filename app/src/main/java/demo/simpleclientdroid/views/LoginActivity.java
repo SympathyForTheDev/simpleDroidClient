@@ -1,9 +1,8 @@
 package demo.simpleclientdroid.views;
 
-import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -11,43 +10,47 @@ import android.widget.Toast;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.client.methods.HttpUriRequest;
-import org.apache.http.message.BasicNameValuePair;
-import org.json.JSONArray;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 
 import demo.simpleclientdroid.R;
-import demo.simpleclientdroid.classes.AuthManager;
+import demo.simpleclientdroid.classes.BaseActivity;
 import demo.simpleclientdroid.classes.HttpHandler;
 import demo.simpleclientdroid.classes.RequestManager;
-import demo.simpleclientdroid.classes.UsersManager;
-import demo.simpleclientdroid.data.User;
 
-
-public class LoginActivity extends Activity {
+/**
+ * LoginActivity
+ * Created by damien.bouclier on 01/09/2014.
+ */
+public class LoginActivity extends BaseActivity {
 
     final String PARAM_LOGIN = "user_login";
     final String PARAM_PASSWORD = "user_password";
+    private EditText loginEditText;
+    private EditText passwordEditText;
+    private Button loginButton;
+
+    @Override
+    protected void intialize() {
+        setContentView(R.layout.activity_login);
+
+        loginEditText = (EditText) findViewById(R.id.login_username);
+        passwordEditText = (EditText) findViewById(R.id.login_password);
+        loginButton = (Button) findViewById(R.id.login_button);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
-
-        final EditText login = (EditText) findViewById(R.id.login_username);
-        final EditText password = (EditText) findViewById(R.id.login_password);
-        Button loginButton = (Button) findViewById(R.id.login_button);
 
         loginButton.setOnClickListener(new View.OnClickListener() {
                @Override
                public void onClick(View v) {
 
-                   final String sLogin = login.getText().toString();
-                   String sPassword = password.getText().toString();
+                   String sLogin = loginEditText.getText().toString();
+                   String sPassword = passwordEditText.getText().toString();
 
                    if (sLogin.isEmpty() || sPassword.isEmpty())
-
                    {
                        Toast.makeText(LoginActivity.this,
                                R.string.username_password_empty,
@@ -55,7 +58,10 @@ public class LoginActivity extends Activity {
                        return;
                    }
 
-                   AuthManager.getInstance().setAuthInfo(sLogin, sPassword);
+                   SharedPreferences.Editor edit = getSettings().edit();
+                   edit.putString("login", sLogin);
+                   edit.putString("password", sPassword);
+                   edit.apply();
 
                    try {
 
@@ -63,29 +69,23 @@ public class LoginActivity extends Activity {
                            @Override
                            public HttpUriRequest getHttpRequestMethod() {
 
-                               RequestManager RM = new RequestManager();
-                               ArrayList<NameValuePair> params = new ArrayList<NameValuePair>();
-                               params.add(new BasicNameValuePair("username", sLogin));
-
-                               RM.prepareRequest(User.class.getSimpleName(), RequestManager.RequestMethod.GET, params);
+                               RequestManager RM = new RequestManager(getApplicationContext());
+                               RM.prepareRequest("login", RequestManager.RequestMethod.GET, new ArrayList<NameValuePair>());
                                return RM.getRequest();
                            }
                            @Override
                            public void onResponse(String result) {
 
-                               try {
-                                   JSONObject object = new JSONObject(result);
-                                   JSONArray arr = object.getJSONArray("users");
-                                   User user = UsersManager.convertUser(arr.getJSONObject(0));
-
-                                   if (user.Username == sLogin )
-                                   {
-
-                                   }
-
-                               } catch (Exception e) {
-                                   e.printStackTrace();
-                               }
+                              // service minimum, c'est au serveur de faire les controles normalement...
+                              if(result.equals("AuthOK"))
+                              {
+                                  Intent intent = new Intent(LoginActivity.this, UserActivity.class);
+                                  startActivity(intent);
+                              } else {
+                                  Toast.makeText(LoginActivity.this,
+                                          R.string.auth_failed,
+                                          Toast.LENGTH_SHORT).show();
+                              }
                            }
 
                        }.execute();
@@ -93,11 +93,10 @@ public class LoginActivity extends Activity {
                    } catch (Exception e) {
                        e.printStackTrace();
                    }
-
-                   Intent intent = new Intent(LoginActivity.this, UrlActivity.class);
-                   startActivity(intent);
                }
             }
         );
     }
+
+
 }

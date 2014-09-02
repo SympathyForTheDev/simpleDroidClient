@@ -1,10 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <!-- app strings -->
     <string name="app_name">SimpleClientDroid</string>
-    <string name="hello_world">Hello world!</string>
-    <string name="action_settings">Settings</string>
     <string name="application_font">sans-serif-light</string>
+    <string name="action_settings">Settings</string>
+
+    <!-- user activity strings -->
+     <string name="title_activity_user">User List</string>
+
+     <!-- settings activity strings  -->
+     <string name="title_activity_settings">Settings</string>
+    <string name="settings_button_label">OK</string>
+    <string name="settings_default_server_url">127.0.0.1</string>
+
+    <!-- login activity string -->
+     <string name="title_activity_login">Login</string>
     <string name="username_password_empty">Username or password is empty!</string>
     <string name="user_not_found">User not found!</string>
-</resources>
+    <string name="auth_failed">Authentification failed!</string>
+
+ </resources>

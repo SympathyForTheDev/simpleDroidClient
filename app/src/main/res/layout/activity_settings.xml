@@ -6,27 +6,17 @@
     android:layout_marginLeft="20dp"
     android:layout_marginRight="20dp">
     <EditText
-        android:id="@+id/login_username"
+        android:id="@+id/settings_serverurl"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:textSize="20dp"
-        android:hint="Username"
-        android:inputType="textPersonName"
-        android:lines="1" />
-    <EditText
-        android:id="@+id/login_password"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:textSize="20dp"
-        android:hint="Password"
-        android:inputType="textPassword"
-        android:lines="1" />
+        android:lines="1"
+        android:inputType="" />
     <Button
-        android:id="@+id/login_button"
+        android:id="@+id/settings_button"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:padding="10dp"
-        android:text="Login"/>
+        android:text="@string/settings_button_label"/>
 </LinearLayout>

@@ -1,5 +1,8 @@
 package demo.simpleclientdroid.classes;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.util.Log;
 
 import org.apache.http.HttpResponse;
@@ -23,9 +26,10 @@ import demo.simpleclientdroid.SimpleAndroidClient;
  */
 public class RequestManager {
 
-    public void RequestManager()
-    {
+    private SharedPreferences _settings;
+    public RequestManager(Context applicationContext) {
 
+        _settings = PreferenceManager.getDefaultSharedPreferences(applicationContext);
     }
 
     public enum RequestMethod{
@@ -55,7 +59,7 @@ public class RequestManager {
 
         setUrl(dataName, params);
         setRequest(method);
-        AddAuthHeader( AuthManager.getInstance().getUsername(),  AuthManager.getInstance().getPassword(),  false);
+        AddAuthHeader( _settings.getString("login",""),   _settings.getString("password",""),  false);
     }
 
     private String _url;
@@ -69,14 +73,16 @@ public class RequestManager {
 
             for(NameValuePair p : params)
             {
-                _url = _url+p.getName()+"="+p.getValue();
+                _url = _url+p.getName()+"="+p.getValue()+"&";
             }
         }
     }
 
     private String getDataSource(String dataName)
     {
-        return "http://192.168.5.18:8089/simplelaravelserver/public/api/"+dataName.toLowerCase();
+        String serverUrl = _settings.getString("serverURL", "127.0.0.1");
+
+        return "http://"+serverUrl+"/simplelaravelserver/public/api/"+dataName.toLowerCase();
     }
 
     private void setRequest(RequestMethod method) {
