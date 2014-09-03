@@ -3,9 +3,11 @@ package demo.simpleclientdroid.views;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import org.apache.http.NameValuePair;
@@ -32,6 +34,7 @@ public class LoginActivity extends BaseActivity {
 
     @Override
     protected void intialize() {
+
         setContentView(R.layout.activity_login);
 
         loginEditText = (EditText) findViewById(R.id.login_username);
@@ -42,6 +45,7 @@ public class LoginActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
 
         loginButton.setOnClickListener(new View.OnClickListener() {
                @Override
@@ -68,22 +72,23 @@ public class LoginActivity extends BaseActivity {
                        new HttpHandler() {
                            @Override
                            public HttpUriRequest getHttpRequestMethod() {
-
                                RequestManager RM = new RequestManager(getApplicationContext());
                                RM.prepareRequest("login", RequestManager.RequestMethod.GET, new ArrayList<NameValuePair>());
                                return RM.getRequest();
                            }
                            @Override
                            public void onResponse(String result) {
-
-                              // service minimum, c'est au serveur de faire les controles normalement...
-                              if(result.equals("AuthOK"))
+                               if(result.equals("AuthOK"))
                               {
                                   Intent intent = new Intent(LoginActivity.this, UserActivity.class);
                                   startActivity(intent);
-                              } else {
+                              } else if (result.isEmpty()) {
                                   Toast.makeText(LoginActivity.this,
                                           R.string.auth_failed,
+                                          Toast.LENGTH_SHORT).show();
+                              } else {
+                                  Toast.makeText(LoginActivity.this,
+                                          result,
                                           Toast.LENGTH_SHORT).show();
                               }
                            }
@@ -97,6 +102,4 @@ public class LoginActivity extends BaseActivity {
             }
         );
     }
-
-
 }

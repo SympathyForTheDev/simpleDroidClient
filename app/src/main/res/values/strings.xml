@@ -12,6 +12,7 @@
      <!-- settings activity strings  -->
      <string name="title_activity_settings">Settings</string>
     <string name="settings_button_label">OK</string>
+    <string name="settings_serverURL">"serverURL"</string>
     <string name="settings_default_server_url">127.0.0.1</string>
 
     <!-- login activity string -->
@@ -19,5 +20,7 @@
     <string name="username_password_empty">Username or password is empty!</string>
     <string name="user_not_found">User not found!</string>
     <string name="auth_failed">Authentification failed!</string>
+    <string name="login_username_hint">Username</string>
+    <string name="login_password_hint">Password</string>
 
  </resources>
